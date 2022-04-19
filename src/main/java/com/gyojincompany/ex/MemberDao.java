@@ -50,4 +50,48 @@ public class MemberDao {
 		return dbFlag;
 	}
 	
+	public int confirmId(String id) { //가입여부를 확인
+		
+		int dbFlag = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;//sql 실행 객체
+		ResultSet rs = null;
+		
+		String sql = "SELECT id from web_members where id = ?";
+		
+		try {
+			Class.forName(driverName);//jdbc 드라이버 로딩
+			conn = DriverManager.getConnection(url, user, password);//DB 연동			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {//조건이 참이면 이미 가입된 아이디
+				dbFlag = 1;				
+			} else {
+				dbFlag = 0;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}			
+			
+		}		
+		
+		return dbFlag;//가입이 되어 있으면 1이 반환, 아니면 0이 반환
+	}
 }
