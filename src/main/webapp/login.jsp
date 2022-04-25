@@ -18,7 +18,7 @@
 		<input type = "button" value = "회원가입" onclick = "javascript:window.location='join.jsp'">
 		<!-- 로그인을 취소하면 회원가입 페이지로 가게... -->
 	
-	</form>
+	</form> 
 
 </body>
 </html>
